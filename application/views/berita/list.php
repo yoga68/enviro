@@ -38,13 +38,13 @@
             <div class="single-blog-page">
               <div class="left-blog">
                 <h4>categories</h4>
-                <ul class="project-menu">
+                <ul class="project-berita">
                   <li>
                     <a href="#" class="active" data-filter="*">All</a>
                   </li>
                   <?php foreach($katberita as $katberita) { ?>
                   <li>
-                  <a href="#" data-filter="<?= $katberita->id_katberita?>"><?= $katberita->nama_kategori;?></a>
+                  <a href="#" data-filter=".<?= $katberita->id_katberita?>"><?= $katberita->nama_kategori;?></a>
                   </li>
                  <?php } ?>
                 </ul>
@@ -53,10 +53,10 @@
           </div>
         </div>
         <div class="col-md-8 col-sm-8 col-xs-12">
-          <div class="row  awesome-project-content">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 awesome-project-content">
               <?php foreach($berita as $berita) { ?>
-              <div class="single-blog <?= $berita->id_katberita;?>">
+              <div class="single-blog active <?= $berita->id_katberita;?>">
                 <div class="single-blog-img">
                   <img src="<?= base_url('assets/upload/image/thumbs/news/'.$berita->gambar);?>" alt="">
                 </div>
