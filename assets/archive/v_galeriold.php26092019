@@ -1,0 +1,185 @@
+  <div class="card-body table-responsive">
+                <div>
+
+                  <div class="mb-2">
+                    <a href="" title="Tambah Photo" class="btn btn-success" data-toggle="modal" data-target="#addgaleri"><i class="far fa-plus-square">&nbsp;Add Photos</i>
+                    </a>
+
+                    <div class="float-right">
+                      <div class="btn-group" data-sortOrder>
+                        <a class="btn btn-secondary" href="javascript:void(0)" data-shuffle> Shuffle items </a>
+                        <a class="btn btn-default" href="javascript:void(0)" data-sortAsc> Ascending </a>
+                        <a class="btn btn-default" href="javascript:void(0)" data-sortDesc> Descending </a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div>
+                  <div class="btn-group w-100 mb-2">
+                    <a class="btn btn-info active" href="javascript:void(0)" data-filter="all"> All items </a>
+                    <?php foreach($katlayanan as $katlayanan2) {?>
+                    
+                    <a class="btn btn-info" href="javascript:void(0)" data-filter="<?= $katlayanan2->id_katlayanan;?>"> <?= $katlayanan2->nama_kategori;?> </a>
+                    <!-- <a class="btn btn-info" href="javascript:void(0)" data-filter="2"> Category 2 (BLACK) </a>
+                    <a class="btn btn-info" href="javascript:void(0)" data-filter="3"> Category 3 (COLORED) </a> -->
+                    <?php } ?>
+                  </div>
+                  <div class="filter-container p-0 row">
+                    <?php foreach($galeri as $galeri) { ?>
+                    <div class="filtr-item col-sm-2" data-category="<?= $galeri->id_katlayanan;?>" data-sort="<?= $galeri->id_katlayanan;?>">
+                      <a href="<?= base_url('assets/upload/image/galeri/'.$galeri->gambar);?>" data-toggle="lightbox" data-title="<?= $galeri->caption;?>" data-footer="<?= $galeri->nama;?>">
+                        <img src="<?= base_url('assets/upload/image/galeri/'.$galeri->gambar);?>" class="img-fluid mb-2"/>
+                      </a>
+                    </div>
+                    <!-- 
+                    <div class="filtr-item col-sm-2" data-category="2" data-sort="black sample">
+                      <a href="https://via.placeholder.com/1200/000000.png?text=2" data-toggle="lightbox" data-title="sample 2 - black">
+                        <img src="https://via.placeholder.com/300/000000?text=2" class="img-fluid mb-2" alt="black sample"/>
+                      </a>
+                    </div>
+                    
+                    <div class="filtr-item col-sm-2" data-category="3" data-sort="red sample">
+                      <a href="https://via.placeholder.com/1200/FF0000/FFFFFF.png?text=3" data-toggle="lightbox" data-title="sample 3 - red">
+                        <img src="https://via.placeholder.com/300/FF0000/FFFFFF?text=3" class="img-fluid mb-2" alt="red sample"/>
+                      </a>
+                    </div>
+                    <div class="filtr-item col-sm-2" data-category="4" data-sort="red sample">
+                      <a href="https://via.placeholder.com/1200/FF0000/FFFFFF.png?text=4" data-toggle="lightbox" data-title="sample 4 - red">
+                        <img src="https://via.placeholder.com/300/FF0000/FFFFFF?text=4" class="img-fluid mb-2" alt="red sample"/>
+                      </a>
+                    </div> -->
+                  <?php } ?>
+                  </div>
+                </div>
+                <div class="modal fade" id="addgaleri">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="card card-info">
+                        <div class="card-header">
+                          <h3 class="card-title">Add Photos</h3>
+                        </div>
+                        <?php 
+                          $attribut = 'class="form-horizontal"';
+
+                          if(isset($error_upload)){
+                            echo '<div class="alert alert-warning">'.$error_upload.'</div>';
+                          }
+                          //form open
+                          echo form_open_multipart(base_url('admin/gallery/addgaleri'), $attribut); 
+                        ?>
+                        <!-- Horizontal Form -->
+                      
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                          <div class="card-body">
+                            <div class="form-group row">
+                              <label class="col-sm-2 control-label">Caption Photos</label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="caption" placeholder="Caption Photos" required>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-sm-2 control-label">Category Photos</label>
+                              <div class="col-sm-4">
+                                <select name="id_katlayanan" class="form-control">
+                                  <?php foreach($katlayanan as $katlayanan1) {?>
+                                  <option value="<?= $katlayanan1->id_katlayanan;?>"><?= $katlayanan1->nama_kategori;?></option>
+                                  <?php } ?>
+                                </select>
+                              </div>
+                              <label class="col-sm-2 control-label">Image Position</label>
+                              <div class="col-sm-4">
+                                <select name="posisi" class="form-control">
+                                  <option value="Gallery">Gallery</option>
+                                  <option value="Homepage">Homepage Slider</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-sm-2 control-label">Upload Gambar</label>
+                              <div class="col-sm-10">
+                                <input type="file" class="form-control" name="gambar" required>
+                              </div>
+                            </div>
+                              
+                          </div>
+                          <!-- /.card-body -->
+                          </div>
+                      <!-- /.card -->
+                          <div class="modal-footer justify-content-between">
+                            <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> &nbsp;Reset</button>
+                            <button type="submit" class="btn btn-success" name="submit"><i class="fas fa-envelope"></i>&nbsp;Publish</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                        <?php 
+                          echo form_close();
+                        ?>
+  
+              </div>
+
+
+
+
+
+
+
+
+
+
+              
+  <!-- Portfolio Grid -->
+  <section class="bg-light page-section" id="news">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">News Enviro Buana Cipta</h2>
+          <h3 class="section-subheading text-muted">Some News From Our Company</h3>
+        </div>
+      </div>
+      <div class="btn-group">
+          <a class="btn btn-secondary" href="javascript:void(0)" data-shuffle> Shuffle items </a>
+          <a class="btn btn-info active" href="javascript:void(0)" data-filter="all"> All items </a>
+      </div>
+      <div class="btn-group">
+        <?php foreach($katberita as $katberita1) { ?>
+          <a class="btn btn-info" href="javascript:void(0)" data-filter="<?= $katberita1->id_katberita;?>"> <?= character_limiter($katberita1->nama_kategori,3);?> </a>
+          <?php } ?>
+      </div>
+      <div class="btn-group" data-sortOrder>
+        <a class="btn btn-outline-warning" href="javascript:void(0)" data-sortAsc> Ascending </a>
+        <a class="btn btn-outline-warning" href="javascript:void(0)" data-sortDesc> Descending </a>
+      </div>
+          <!-- 
+          <a class="btn btn-info" href="javascript:void(0)" data-filter="2"> Category 2 (BLACK) </a>
+          <a class="btn btn-info" href="javascript:void(0)" data-filter="3"> Category 3 (COLORED) </a> -->
+            <!-- <select type="hidden" class="custom-select" style="width: auto;" data-sortOrder>
+              <option value="index"> Sort by Position </option>
+              <option value="sortData"> Sort by Custom Data </option>
+            </select> -->
+        <div class="filter-container">
+          <?php foreach($berita as $berita1) { ?>
+          <div class="filtr-item" data-category="<?= $berita1->id_katberita;?>" data-sort="<?= $berita1->id_katberita;?>">
+              <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+              <img class="img-fluid" src="<?= base_url('assets/upload/image/thumbs/news/'.$berita1->gambar);?>">
+              </a>
+              <div class="portfolio-caption">
+                <h4>Lines</h4>
+                <p class="text-muted">Branding</p>
+              </div> 
+          </div>
+        <?php } ?>
+        </div>
+
+    </div>
+  </section>
